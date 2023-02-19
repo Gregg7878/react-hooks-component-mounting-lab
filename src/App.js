@@ -2,33 +2,41 @@ import React, { Component } from 'react';
 
 import Timer from './Timer'
 
-class App extends Component {
-
-  //no props being used here, so we can use the shorthand declaration of state
-  state = {
-    timerIDs: []
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      timers: [],
+    };
+    this.handleAddTimer = this.handleAddTimer.bind(this);
   }
 
+  componentDidMount() {
+    this.handleAddTimer();
+  }
 
-  //Your code here:
-
-
-
-
-
-
-
+  handleAddTimer() {
+    const { timers } = this.state;
+    const newTimer = {
+      id: Math.floor(Math.random() * 10000),
+    };
+    this.setState({
+      timers: [...timers, newTimer],
+    });
+  }
 
 
   // No need to modify anything in render or the class methods below
   // Unless, of course, you're curious about how it all works
   render() {
-
+    const { timers } = this.state;
     return (
       <div className="App">
         <h1>MultiTimer</h1>
         <button onClick={this.handleAddTimer}>Add New Timer</button>
-
+        {timers.map(timer => (
+          <Timer key={timer.id} />
+        ))}
         <div className="TimerGrid">
           {this.renderTimers()}
         </div>

@@ -7,6 +7,27 @@ class Timer extends Component {
   };
 
   // add your code here
+  constructor(props) {
+    super(props);
+    this.state = {
+      time: 0,
+    };
+    this.clockTick = this.clockTick.bind(this);
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(this.clockTick, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  clockTick() {
+    this.setState(prevState => ({
+      time: prevState.time + 1,
+    }));
+  }
 
   render() {
     const { time, color } = this.state;
